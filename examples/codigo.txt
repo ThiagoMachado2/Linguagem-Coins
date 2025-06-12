@@ -1,0 +1,149 @@
+inteiro a;
+a = 10;
+
+procedimento mostrar_mensagem() {
+    texto msg;
+    msg = "Procedimento executado";
+}
+
+funcao inteiro somar(inteiro x, inteiro y) retorna inteiro {
+    inteiro resultado;
+    resultado = x + y;
+    retorna resultado;
+}
+
+mostrar_mensagem();
+a = somar(5, 3);
+
+
+inteiro x;
+real y;
+texto z;
+
+x = 10;
+y = 20.5;
+z = "Hello World";
+
+/* Teste de operadores */
+inteiro a;
+a = 5 + 3 * 2;
+
+/* Teste de condicionais */
+se (a > 10) {
+    x = 1;
+} senao {
+    x = 0;
+}
+
+/* Teste de loop */
+enquanto (x < 5) {
+    x = x + 1;
+}
+
+/* Teste de procedimento */
+procedimento minha_proc() {
+    inteiro p;
+    p = 100;
+}
+
+/* Teste de função */
+funcao inteiro minha_func(inteiro param1, real param2) retorna inteiro {
+    inteiro resultado;
+    resultado = param1 * 2;
+    retorna resultado;
+}
+
+/* Chamada de procedimento */
+minha_proc();
+
+/* Chamada de função */
+inteiro res;
+res = minha_func(5, 10.0);
+
+/* Erros léxicos */
+@invalido;
+
+/* Erros sintáticos */
+x = 5;
+
+/* Erros semânticos */
+inteiro k;
+k = "string"; // Erro: Incompatibilidade de tipos
+
+funcao inteiro func_sem_retorno() retorna inteiro {
+    inteiro a;
+    a = 1;
+} // Erro: Função esperava retorno, mas encontrou retorno vazio.
+
+funcao inteiro func_retorno_errado() retorna inteiro {
+    retorna "texto"; // Erro: Incompatibilidade de tipos no retorno
+}
+
+inteiro ja_declarado;
+inteiro ja_declarado; // Erro: Variável já declarada
+
+nao_declarado = 10; // Erro: Símbolo não declarado
+
+inteiro num;
+num = "abc" + 1; // Erro: Operação aritmética com tipo texto não permitida
+
+minha_proc(1); // Erro: Número incorreto de argumentos
+
+minha_func(1.5, 2); // Erro: Incompatibilidade de tipos no argumento
+
+inteiro teste_condicao;
+se ("texto") { // Erro: Condição de tipo inesperado
+    teste_condicao = 1;
+}
+
+enquanto ("abc") { // Erro: Condição de tipo inesperado
+    teste_condicao = 2;
+}
+
+inteiro var_func;
+var_func = minha_func; // Erro: 'minha_func' não é uma variável.
+
+retorna 1; // Erro: Instrução 'retorna' fora de uma função.
+
+
+
+
+
+// Teste de erro semântico: Variável já declarada
+inteiro a;
+inteiro a; // Erro: 'a' já declarada
+
+// Teste de erro semântico: Atribuição de tipo incompatível
+inteiro b;
+b = 1.5; // Erro: 'real' para 'inteiro'
+
+// Teste de erro semântico: Variável não declarada
+c = 10; // Erro: 'c' não declarada
+
+// Teste de erro semântico: Chamada de função com argumentos incorretos
+funcao inteiro soma(inteiro x, inteiro y) retorna inteiro {
+    retorna x + y;
+}
+
+soma(1); // Erro: número incorreto de argumentos
+soma(1, 2.5); // Erro: tipo de argumento incompatível
+
+// Teste de erro semântico: Retorno de função sem valor
+funcao inteiro minhaFuncao() retorna inteiro {
+    retorna; // Erro: espera valor de retorno
+}
+
+// Teste de erro semântico: Retorno de função com tipo incompatível
+funcao inteiro outraFuncao() retorna inteiro {
+    retorna "texto"; // Erro: tipo de retorno incompatível
+}
+
+// Teste de erro semântico: Operação aritmética com texto
+texto str1;
+inteiro num1;
+str1 = "hello";
+num1 = 5;
+
+inteiro resultado = str1 + num1; // Erro: operação aritmética com texto
+
+

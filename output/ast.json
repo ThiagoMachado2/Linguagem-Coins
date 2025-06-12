@@ -1,0 +1,23 @@
+{
+    "type": "Programa",
+    "body": [
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "a",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "a",
+            "value": {
+                "type": "Literal",
+                "value": "10",
+                "_type": "inteiro"
+            }
+        }
+    ]
+}
