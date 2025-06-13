@@ -5,6 +5,339 @@
             "type": "Declaracao",
             "declarations": [
                 {
+                    "name": "x",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "y",
+                    "type": "real"
+                }
+            ]
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "z",
+                    "type": "texto"
+                }
+            ]
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "x",
+            "value": {
+                "type": "Literal",
+                "value": "10",
+                "_type": "inteiro"
+            }
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "y",
+            "value": {
+                "type": "Literal",
+                "value": "20.5",
+                "_type": "real"
+            }
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "z",
+            "value": {
+                "type": "Literal",
+                "value": "\"Hello World\"",
+                "_type": "texto"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "/* Teste de operadores */",
+            "kind": "COMENTARIO_BLOCO"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "a",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "a",
+            "value": {
+                "type": "BinaryExpression",
+                "operator": "+",
+                "left": {
+                    "type": "Literal",
+                    "value": "5",
+                    "_type": "inteiro"
+                },
+                "right": {
+                    "type": "BinaryExpression",
+                    "operator": "*",
+                    "left": {
+                        "type": "Literal",
+                        "value": "3",
+                        "_type": "inteiro"
+                    },
+                    "right": {
+                        "type": "Literal",
+                        "value": "2",
+                        "_type": "inteiro"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "/* Teste de condicionais */",
+            "kind": "COMENTARIO_BLOCO"
+        },
+        {
+            "type": "Condicional",
+            "condition": {
+                "type": "BinaryExpression",
+                "operator": ">",
+                "left": {
+                    "type": "Identifier",
+                    "name": "a"
+                },
+                "right": {
+                    "type": "Literal",
+                    "value": "10",
+                    "_type": "inteiro"
+                }
+            },
+            "consequent": [
+                {
+                    "type": "Atribuicao",
+                    "variable": "x",
+                    "value": {
+                        "type": "Literal",
+                        "value": "1",
+                        "_type": "inteiro"
+                    }
+                }
+            ],
+            "alternate": [
+                {
+                    "type": "Atribuicao",
+                    "variable": "x",
+                    "value": {
+                        "type": "Literal",
+                        "value": "0",
+                        "_type": "inteiro"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Comentario",
+            "value": "/* Teste de loop */",
+            "kind": "COMENTARIO_BLOCO"
+        },
+        {
+            "type": "Repeticao",
+            "condition": {
+                "type": "BinaryExpression",
+                "operator": "<",
+                "left": {
+                    "type": "Identifier",
+                    "name": "x"
+                },
+                "right": {
+                    "type": "Literal",
+                    "value": "5",
+                    "_type": "inteiro"
+                }
+            },
+            "body": [
+                {
+                    "type": "Atribuicao",
+                    "variable": "x",
+                    "value": {
+                        "type": "BinaryExpression",
+                        "operator": "+",
+                        "left": {
+                            "type": "Identifier",
+                            "name": "x"
+                        },
+                        "right": {
+                            "type": "Literal",
+                            "value": "1",
+                            "_type": "inteiro"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Comentario",
+            "value": "/* Teste de procedimento */",
+            "kind": "COMENTARIO_BLOCO"
+        },
+        {
+            "type": "SubroutineDeclaration",
+            "kind": "procedimento",
+            "name": "minha_proc",
+            "parameters": [],
+            "body": [
+                {
+                    "type": "Declaracao",
+                    "declarations": [
+                        {
+                            "name": "p",
+                            "type": "inteiro"
+                        }
+                    ]
+                },
+                {
+                    "type": "Atribuicao",
+                    "variable": "p",
+                    "value": {
+                        "type": "Literal",
+                        "value": "100",
+                        "_type": "inteiro"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Comentario",
+            "value": "/* Teste de fun\u00e7\u00e3o */",
+            "kind": "COMENTARIO_BLOCO"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "resultado",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "resultado",
+            "value": {
+                "type": "BinaryExpression",
+                "operator": "*",
+                "left": {
+                    "type": "Identifier",
+                    "name": "param1"
+                },
+                "right": {
+                    "type": "Literal",
+                    "value": "2",
+                    "_type": "inteiro"
+                }
+            }
+        },
+        {
+            "type": "Retorno",
+            "value": {
+                "type": "Identifier",
+                "name": "resultado"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "/* Chamada de fun\u00e7\u00e3o */",
+            "kind": "COMENTARIO_BLOCO"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "res",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "res",
+            "value": {
+                "type": "ChamadaSubrotina",
+                "name": "minha_func",
+                "arguments": [
+                    {
+                        "type": "Literal",
+                        "value": "5",
+                        "_type": "inteiro"
+                    },
+                    {
+                        "type": "Literal",
+                        "value": "10.0",
+                        "_type": "real"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "/* Erros l\u00e9xicos */",
+            "kind": "COMENTARIO_BLOCO"
+        },
+        {
+            "type": "Comentario",
+            "value": "// @invalido;\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Comentario",
+            "value": "/* Erros sint\u00e1ticos */",
+            "kind": "COMENTARIO_BLOCO"
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "x",
+            "value": {
+                "type": "Literal",
+                "value": "5",
+                "_type": "inteiro"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "/* Erros sem\u00e2nticos */",
+            "kind": "COMENTARIO_BLOCO"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "k",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "k",
+            "value": {
+                "type": "Literal",
+                "value": "\"string\"",
+                "_type": "texto"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: Incompatibilidade de tipos\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
                     "name": "a",
                     "type": "inteiro"
                 }
@@ -15,9 +348,408 @@
             "variable": "a",
             "value": {
                 "type": "Literal",
+                "value": "1",
+                "_type": "inteiro"
+            }
+        },
+        {
+            "type": "Retorno",
+            "value": {
+                "type": "Literal",
+                "value": "\"texto\"",
+                "_type": "texto"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: Incompatibilidade de tipos no retorno\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "ja_declarado",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "ja_declarado",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: Vari\u00e1vel j\u00e1 declarada\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "nao_declarado",
+            "value": {
+                "type": "Literal",
                 "value": "10",
                 "_type": "inteiro"
             }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: S\u00edmbolo n\u00e3o declarado\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "num",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "num",
+            "value": {
+                "type": "BinaryExpression",
+                "operator": "+",
+                "left": {
+                    "type": "Literal",
+                    "value": "\"abc\"",
+                    "_type": "texto"
+                },
+                "right": {
+                    "type": "Literal",
+                    "value": "1",
+                    "_type": "inteiro"
+                }
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: Opera\u00e7\u00e3o aritm\u00e9tica com tipo texto n\u00e3o permitida\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "ChamadaSubrotina",
+            "name": "minha_proc",
+            "arguments": [
+                {
+                    "type": "Literal",
+                    "value": "1",
+                    "_type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: N\u00famero incorreto de argumentos\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "ChamadaSubrotina",
+            "name": "minha_func",
+            "arguments": [
+                {
+                    "type": "Literal",
+                    "value": "1.5",
+                    "_type": "real"
+                },
+                {
+                    "type": "Literal",
+                    "value": "2",
+                    "_type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: Incompatibilidade de tipos no argumento\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "teste_condicao",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Condicional",
+            "condition": {
+                "type": "Literal",
+                "value": "\"texto\"",
+                "_type": "texto"
+            },
+            "consequent": [
+                {
+                    "type": "Comentario",
+                    "value": "// Erro: Condi\u00e7\u00e3o de tipo inesperado\n",
+                    "kind": "COMENTARIO_LINHA"
+                },
+                {
+                    "type": "Atribuicao",
+                    "variable": "teste_condicao",
+                    "value": {
+                        "type": "Literal",
+                        "value": "1",
+                        "_type": "inteiro"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Repeticao",
+            "condition": {
+                "type": "Literal",
+                "value": "\"abc\"",
+                "_type": "texto"
+            },
+            "body": [
+                {
+                    "type": "Comentario",
+                    "value": "// Erro: Condi\u00e7\u00e3o de tipo inesperado\n",
+                    "kind": "COMENTARIO_LINHA"
+                },
+                {
+                    "type": "Atribuicao",
+                    "variable": "teste_condicao",
+                    "value": {
+                        "type": "Literal",
+                        "value": "2",
+                        "_type": "inteiro"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "var_func",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "var_func",
+            "value": {
+                "type": "Identifier",
+                "name": "minha_func"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: 'minha_func' n\u00e3o \u00e9 uma vari\u00e1vel.\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Retorno",
+            "value": {
+                "type": "Literal",
+                "value": "1",
+                "_type": "inteiro"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: Instru\u00e7\u00e3o 'retorna' fora de uma fun\u00e7\u00e3o.\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Comentario",
+            "value": "// Teste de erro sem\u00e2ntico: Vari\u00e1vel j\u00e1 declarada\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "a",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "a",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: 'a' j\u00e1 declarada\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Comentario",
+            "value": "// Teste de erro sem\u00e2ntico: Atribui\u00e7\u00e3o de tipo incompat\u00edvel\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "b",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "b",
+            "value": {
+                "type": "Literal",
+                "value": "1.5",
+                "_type": "real"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: 'real' para 'inteiro'\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Comentario",
+            "value": "// Teste de erro sem\u00e2ntico: Vari\u00e1vel n\u00e3o declarada\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "c",
+            "value": {
+                "type": "Literal",
+                "value": "10",
+                "_type": "inteiro"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: 'c' n\u00e3o declarada\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Comentario",
+            "value": "// Teste de erro sem\u00e2ntico: Chamada de fun\u00e7\u00e3o com argumentos incorretos\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Retorno",
+            "value": {
+                "type": "BinaryExpression",
+                "operator": "+",
+                "left": {
+                    "type": "Identifier",
+                    "name": "x"
+                },
+                "right": {
+                    "type": "Identifier",
+                    "name": "y"
+                }
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: n\u00famero incorreto de argumentos\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "ChamadaSubrotina",
+            "name": "soma",
+            "arguments": [
+                {
+                    "type": "Literal",
+                    "value": "1",
+                    "_type": "inteiro"
+                },
+                {
+                    "type": "Literal",
+                    "value": "2.5",
+                    "_type": "real"
+                }
+            ]
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: tipo de argumento incompat\u00edvel\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Comentario",
+            "value": "// Teste de erro sem\u00e2ntico: Retorno de fun\u00e7\u00e3o sem valor\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Retorno"
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: espera valor de retorno\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Retorno",
+            "value": {
+                "type": "Literal",
+                "value": "\"texto\"",
+                "_type": "texto"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: tipo de retorno incompat\u00edvel\n",
+            "kind": "COMENTARIO_LINHA"
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "str1",
+                    "type": "texto"
+                }
+            ]
+        },
+        {
+            "type": "Declaracao",
+            "declarations": [
+                {
+                    "name": "num1",
+                    "type": "inteiro"
+                }
+            ]
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "str1",
+            "value": {
+                "type": "Literal",
+                "value": "\"hello\"",
+                "_type": "texto"
+            }
+        },
+        {
+            "type": "Atribuicao",
+            "variable": "num1",
+            "value": {
+                "type": "Literal",
+                "value": "5",
+                "_type": "inteiro"
+            }
+        },
+        {
+            "type": "Comentario",
+            "value": "// Erro: opera\u00e7\u00e3o aritm\u00e9tica com texto\n",
+            "kind": "COMENTARIO_LINHA"
         }
     ]
 }

@@ -50,7 +50,17 @@ def main():
             
             # Fase 1: Análise Léxica
             print("=== ANÁLISE LÉXICA ===")
-            tokens = analise_lexica(codigo_fonte)
+            tokens, erros_lexicos = analise_lexica(codigo_fonte)
+            if erros_lexicos:
+                print(f"⚠ {len(erros_lexicos)} erros léxicos encontrados.")
+                for erro in erros_lexicos:
+                    print(f"  - {erro}")
+                with open(errors_log, "a", encoding="utf-8") as f:
+                    f.write("\n--- Erros Léxicos ---\n")
+                    for erro in erros_lexicos:
+                        f.write(erro + "\n")
+            else:
+                print("✅ Nenhum erro léxico encontrado.")
             print(f"✅ {len(tokens)} tokens gerados.")
             
             # Fase 2: Análise Sintática
@@ -63,9 +73,13 @@ def main():
                 json.dump(ast, f, indent=4)
             print(f"✅ AST salva em {ast_json}")
             
-            # Verifica erros sintáticos
+            # Verifica erros sintáticos e os escreve no log
             if parser.errors:
                 print(f"⚠ {len(parser.errors)} erros sintáticos encontrados. Verifique o arquivo {errors_log} para detalhes.")
+                with open(errors_log, "a", encoding="utf-8") as f:
+                    f.write("\n--- Erros Sintáticos ---\n")
+                    for erro in parser.errors:
+                        f.write(erro + "\n")
             else:
                 print("✅ Nenhum erro sintático encontrado.")
             
@@ -92,20 +106,22 @@ def main():
             print(f"✅ Tabela de símbolos atualizada salva em {tabela_simbolos_html}")
             
             # Fase 4: Geração de Código (se não houver erros)
-            if not parser.errors and not erros:
+            if not parser.errors and not erros and not erros_lexicos:
                 print("\n=== GERAÇÃO DE CÓDIGO ===")
                 generator = CodeGenerator(ast)
                 python_code = generator.generate()
                 with open(codigo_gerado_py, "w", encoding="utf-8") as f:
                     f.write(python_code)
                 print(f"✅ Código Python gerado e salvo em {codigo_gerado_py}")
+            else:
+                print("⚠ Geração de código ignorada devido a erros léxicos, sintáticos ou semânticos.")
             
             # Resumo final
             print("\n=== RESUMO DA COMPILAÇÃO ===")
-            if not parser.errors and not erros:
+            if not parser.errors and not erros and not erros_lexicos:
                 print("✅ Compilação concluída com sucesso!")
             else:
-                print(f"⚠ Compilação concluída com {len(parser.errors)} erros sintáticos e {len(erros)} erros semânticos.")
+                print(f"⚠ Compilação concluída com {len(erros_lexicos)} erros léxicos, {len(parser.errors)} erros sintáticos e {len(erros)} erros semânticos.")
                 print(f"Verifique os arquivos {errors_log} e {semantic_errors_log} para detalhes.")
     
     except FileNotFoundError as e:
@@ -115,3 +131,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

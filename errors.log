@@ -1,2 +1,25 @@
 Erro semântico: Símbolo 'mostrar_mensagem' não declarado.
 Erro semântico: Símbolo 'mostrar_mensagem' não declarado.
+ERRO SEMÂNTICO: Símbolo 'param1' não declarado.
+ERRO SEMÂNTICO: Instrução 'retorna' fora de uma função.
+ERRO SEMÂNTICO: Símbolo 'minha_func' não declarado.
+ERRO SEMÂNTICO: Incompatibilidade de tipos em atribuição. Esperado inteiro, encontrado texto.
+ERRO SEMÂNTICO: Variável 'a' já declarada neste escopo.
+ERRO SEMÂNTICO: Instrução 'retorna' fora de uma função.
+ERRO SEMÂNTICO: Variável 'ja_declarado' já declarada neste escopo.
+ERRO SEMÂNTICO: Símbolo 'nao_declarado' não declarado.
+ERRO SEMÂNTICO: Operação aritmética com tipo texto não permitida: texto + inteiro
+ERRO SEMÂNTICO: 'minha_proc' não é um procedimento ou função.
+ERRO SEMÂNTICO: Símbolo 'minha_func' não declarado.
+ERRO SEMÂNTICO: Condição de tipo inesperado: texto. Esperado tipo booleano ou numérico.
+ERRO SEMÂNTICO: Condição de tipo inesperado: texto. Esperado tipo booleano ou numérico.
+ERRO SEMÂNTICO: Símbolo 'minha_func' não declarado.
+ERRO SEMÂNTICO: Instrução 'retorna' fora de uma função.
+ERRO SEMÂNTICO: Variável 'a' já declarada neste escopo.
+ERRO SEMÂNTICO: Variável 'a' já declarada neste escopo.
+AVISO SEMÂNTICO: Conversão implícita de real para inteiro em atribuição. Pode haver perda de dados.
+ERRO SEMÂNTICO: Símbolo 'c' não declarado.
+ERRO SEMÂNTICO: Instrução 'retorna' fora de uma função.
+ERRO SEMÂNTICO: Símbolo 'soma' não declarado.
+ERRO SEMÂNTICO: Instrução 'retorna' fora de uma função.
+ERRO SEMÂNTICO: Instrução 'retorna' fora de uma função.

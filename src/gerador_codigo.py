@@ -24,8 +24,6 @@ class CodeGenerator:
             self.visit(child_node)
 
     def visit_Declaracao(self, node):
-        # Declarações em Python não precisam de tipo explícito
-        # Apenas inicializamos as variáveis para garantir que existam
         for declaration in node["declarations"]:
             var_name = declaration["name"]
             var_type = declaration["type"]
@@ -45,7 +43,20 @@ class CodeGenerator:
         left = self.visit_expression(node["left"])
         right = self.visit_expression(node["right"])
         operator = node["operator"]
+        # Mapear operadores lógicos da linguagem Coins para Python
+        if operator == "&&":
+            operator = "and"
+        elif operator == "||":
+            operator = "or"
         return f"({left} {operator} {right})"
+
+    def visit_UnaryExpression(self, node):
+        operand = self.visit_expression(node["operand"])
+        operator = node["operator"]
+        # Mapear operadores lógicos da linguagem Coins para Python
+        if operator == "!":
+            operator = "not"
+        return f"({operator} {operand})"
 
     def visit_Literal(self, node):
         if node["_type"] == "texto":
@@ -77,20 +88,63 @@ class CodeGenerator:
             self.visit(body_node)
         self.indent_level -= 1
 
+    def visit_SubroutineDeclaration(self, node):
+        sub_kind = node["kind"]
+        name = node["name"]
+        params = ", ".join([f"{p['name']}" for p in node["parameters"]])
+        
+        if sub_kind == "PROCEDIMENTO":
+            self.code.append(f"\ndef {name}({params}):")
+        elif sub_kind == "FUNCAO":
+            self.code.append(f"\ndef {name}({params}):")
+        
+        self.indent_level += 1
+        for body_node in node["body"]:
+            self.visit(body_node)
+        self.indent_level -= 1
+        # Adicionar um \'pass\' se o corpo estiver vazio para evitar erro de sintaxe em Python
+        if not node["body"]:
+            self.code.append(f"{self.indent()}pass")
+
     def visit_ChamadaSubrotina(self, node):
         func_name = node["name"]
         args = ", ".join([self.visit_expression(arg) for arg in node["arguments"]])
         self.code.append(f"{self.indent()}{func_name}({args})")
 
+    def visit_Retorno(self, node):
+        if "value" in node:
+            value = self.visit_expression(node["value"])
+            self.code.append(f"{self.indent()}return {value}")
+        else:
+            self.code.append(f"{self.indent()}return")
+
+    def visit_Comentario(self, node):
+        # Adiciona o comentário como um comentário Python
+        comment_text = node["value"]
+        if node["kind"] == "COMENTARIO_LINHA":
+            self.code.append(f"{self.indent()}# {comment_text.strip().lstrip('//').strip()}")
+        elif node["kind"] == "COMENTARIO_BLOCO":
+            # Para comentários de bloco, pode-se usar strings de múltiplas linhas em Python
+            # Ou converter para múltiplas linhas de comentários de linha
+            lines = comment_text.strip().lstrip('/*').rstrip('*/').strip().split('\n')
+            for line in lines:
+                self.code.append(f"{self.indent()}# {line.strip()}")
+
     def visit_expression(self, node):
         if node["type"] == "BinaryExpression":
             return self.visit_BinaryExpression(node)
+        elif node["type"] == "UnaryExpression":
+            return self.visit_UnaryExpression(node)
         elif node["type"] == "Literal":
             return self.visit_Literal(node)
         elif node["type"] == "Identifier":
             return self.visit_Identifier(node)
+        elif node["type"] == "ChamadaSubrotina":
+            # Chamadas de subrotina como parte de uma expressão (ex: em atribuição)
+            func_name = node["name"]
+            args = ", ".join([self.visit_expression(arg) for arg in node["arguments"]])
+            return f"{func_name}({args})"
         else:
-            self.error("Tipo de expressão desconhecido: " + node["type"])
-
+            raise Exception("Tipo de expressão desconhecido: " + node["type"])
 
 

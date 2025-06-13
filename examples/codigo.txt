@@ -1,21 +1,3 @@
-inteiro a;
-a = 10;
-
-procedimento mostrar_mensagem() {
-    texto msg;
-    msg = "Procedimento executado";
-}
-
-funcao inteiro somar(inteiro x, inteiro y) retorna inteiro {
-    inteiro resultado;
-    resultado = x + y;
-    retorna resultado;
-}
-
-mostrar_mensagem();
-a = somar(5, 3);
-
-
 inteiro x;
 real y;
 texto z;
@@ -61,7 +43,7 @@ inteiro res;
 res = minha_func(5, 10.0);
 
 /* Erros léxicos */
-@invalido;
+// @invalido;
 
 /* Erros sintáticos */
 x = 5;
@@ -145,5 +127,6 @@ str1 = "hello";
 num1 = 5;
 
 inteiro resultado = str1 + num1; // Erro: operação aritmética com texto
+
 
 

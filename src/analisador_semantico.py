@@ -202,10 +202,14 @@ class AnalisadorSemantico:
             self.analyze_return(node)
         elif node_type == "BinaryExpression":
             return self.analyze_binary_expression(node)
+        elif node_type == "UnaryExpression": # Adicionado para tratar expressões unárias
+            return self.analyze_unary_expression(node)
         elif node_type == "Identifier":
             return self.analyze_identifier(node)
         elif node_type == "Literal":
             return self.analyze_literal(node)
+        elif node_type == "Comentario": # Comentários não precisam de análise semântica, mas são nós na AST
+            pass
 
     def analyze_declaration(self, node):
         """Analisa declarações de variáveis"""
@@ -257,7 +261,7 @@ class AnalisadorSemantico:
     def analyze_subroutine_declaration(self, node):
         """Analisa declarações de subrotinas (procedimentos e funções)"""
         name = node["name"]
-        sub_type = node["type"]
+        sub_type = node["kind"] # Usar 'kind' do nó da AST
         params = node.get("parameters", [])
         return_type = node.get("return_type")
         
@@ -285,7 +289,7 @@ class AnalisadorSemantico:
             self.analyze_node(stmt)
         
         # Verifica se funções têm retorno
-        if sub_type == "funcao" and not self.has_return and return_type is not None:
+        if sub_type == "FUNCAO" and not self.has_return and return_type is not None:
             self.error(f"Função '{name}' com tipo de retorno '{return_type}' não tem instrução de retorno.")
         
         # Restaura o contexto anterior
@@ -307,7 +311,7 @@ class AnalisadorSemantico:
             return "unknown"
         
         # Verifica se é realmente uma subrotina
-        if subroutine_info["kind"] not in ["procedimento", "funcao"]:
+        if subroutine_info["kind"] not in ["PROCEDIMENTO", "FUNCAO"]:
             self.error(f"'{name}' não é um procedimento ou função.")
             return "unknown"
         
@@ -323,7 +327,7 @@ class AnalisadorSemantico:
             self.check_type_compatibility(param_type, arg_type, f"argumento {i+1} de '{name}'")
         
         # Retorna o tipo de retorno para funções
-        if subroutine_info["kind"] == "funcao":
+        if subroutine_info["kind"] == "FUNCAO":
             return subroutine_info.get("return_type", "unknown")
         return "void"
 
@@ -357,6 +361,11 @@ class AnalisadorSemantico:
         right_type = self.analyze_expression(node["right"])
         return self.infer_type(left_type, right_type, node["operator"])
 
+    def analyze_unary_expression(self, node):
+        """Analisa expressões unárias (ex: !booleano)"""
+        operand_type = self.analyze_expression(node["operand"])
+        return self.infer_type(operand_type, None, node["operator"])
+
     def analyze_identifier(self, node):
         """Analisa identificadores"""
         return self.get_variable_type(node["name"])
@@ -382,6 +391,8 @@ class AnalisadorSemantico:
             return node["_type"]
         elif node_type == "BinaryExpression":
             return self.analyze_binary_expression(node)
+        elif node_type == "UnaryExpression":
+            return self.analyze_unary_expression(node)
         elif node_type == "Identifier":
             return self.analyze_identifier(node)
         elif node_type == "Literal":
@@ -402,69 +413,13 @@ def analise_semantica(ast, semantic_errors_log_path=None):
     directory = os.path.dirname(semantic_errors_log_path)
     if directory:  # Verifica se o diretório não é vazio
         os.makedirs(directory, exist_ok=True)
-    
-    # Limpa o arquivo de erros semânticos
+
+    # Limpa o arquivo de log semântico antes de cada execução
     with open(semantic_errors_log_path, "w", encoding="utf-8") as f:
         f.write("")
-    
-    # Cria e executa o analisador semântico
-    analisador = AnalisadorSemantico(semantic_errors_log_path=semantic_errors_log_path)
-    resultado = analisador.analyze_ast(ast)
-    
-    # Registra erros e avisos
-    with open(semantic_errors_log_path, "a", encoding="utf-8") as f:
-        if analisador.errors:
-            f.write(f"=== {len(analisador.errors)} ERROS SEMÂNTICOS ===\n")
-            for error in analisador.errors:
-                f.write(f"ERRO: {error}\n")
-        
-        if analisador.warnings:
-            f.write(f"\n=== {len(analisador.warnings)} AVISOS SEMÂNTICOS ===\n")
-            for warning in analisador.warnings:
-                f.write(f"AVISO: {warning}\n")
-        
-        if not analisador.errors and not analisador.warnings:
-            f.write("Nenhum erro ou aviso semântico encontrado.\n")
-    
-    return resultado, analisador.errors, analisador.warnings
 
-if __name__ == "__main__":
-    import json
-    import os
-    from analisador_lexico import analise_lexica
-    from analisador_sintatico import Parser
-    
-    try:
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        project_root = os.path.dirname(script_dir)
-        codigo_path = os.path.join(project_root, "examples", "codigo.txt")
-        output_dir = os.path.join(project_root, "output")
-        
-        # Cria diretório de saída se não existir
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-        
-        semantic_errors_log_path = os.path.join(output_dir, "semantic_errors.log")
-        
-        with open(codigo_path, "r", encoding="utf-8") as file:
-            codigo_fonte = file.read()
-            if not codigo_fonte.strip():
-                print(f"⚠ O arquivo {codigo_path} está vazio!")
-            else:
-                tokens = analise_lexica(codigo_fonte)
-                parser = Parser(tokens)
-                ast = parser.parse()
-                
-                print("\n=== ANÁLISE SEMÂNTICA ===")
-                resultado, erros, avisos = analise_semantica(ast, semantic_errors_log_path)
-                
-                if resultado:
-                    print("✅ Análise semântica concluída com sucesso!")
-                else:
-                    print(f"❌ Análise semântica concluída com {len(erros)} erros e {len(avisos)} avisos.")
-                    print(f"Verifique o arquivo {semantic_errors_log_path} para detalhes.")
-    
-    except FileNotFoundError as e:
-        print(f"❌ Arquivo não encontrado: {e}")
-    except Exception as e:
-        print(f"❌ Erro durante a análise semântica: {str(e)}")
+    analisador = AnalisadorSemantico(semantic_errors_log_path=semantic_errors_log_path)
+    analisador.analyze_ast(ast)
+    return True, analisador.errors, analisador.warnings
+
+

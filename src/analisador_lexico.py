@@ -2,10 +2,10 @@ import re
 import html
 import os
 
-
 token_specs = [
-    ("COMENTARIO", r"//.*|/\*[\s\S]*?\*/"), # Changed to consume till end of line for // and non-greedy for /* */
-    ("SKIP", r"[ \t\n]+"), # Moved to top for higher precedence
+    ("COMENTARIO_LINHA", r"//.*\n"), # Comentário de linha
+    ("COMENTARIO_BLOCO", r"/\*[\s\S]*?\*/"), # Comentário de bloco (não-ganancioso)
+    ("SKIP", r"[ \t\n]+"), # Espaços em branco e quebras de linha
     ("TIPO", r"\b(inteiro|real|texto)\b"),
     ("SE", r"\bse\b"),
     ("SENAO", r"\bsenao\b"),
@@ -26,8 +26,7 @@ token_specs = [
     ("FECHA_PAREN", r"\)"),
     ("ABRE_CHAVE", r"\{"),
     ("FECHA_CHAVE", r"\}"),
-
-    ("MISMATCH", r"."),
+    ("MISMATCH", r"."), # Qualquer outro caractere
 ]
 
 tok_regex = "|".join(f"(?P<{name}>{regex})" for name, regex in token_specs)
@@ -36,19 +35,25 @@ tabela_simbolos = {}
 
 def analise_lexica(codigo):
     tokens_gerados = []
+    erros_lexicos = []
     for match in re.finditer(tok_regex, codigo):
         tipo = match.lastgroup
         valor = match.group(tipo)
 
-        if tipo == "SKIP" or tipo == "COMENTARIO":
+        if tipo == "SKIP":
             continue
+        elif tipo == "COMENTARIO_LINHA":
+            tokens_gerados.append(("COMENTARIO", valor, "COMENTARIO_LINHA"))
+        elif tipo == "COMENTARIO_BLOCO":
+            tokens_gerados.append(("COMENTARIO", valor, "COMENTARIO_BLOCO"))
         elif tipo == "MISMATCH":
-            tokens_gerados.append(("ERRO_LEXICO", valor))
+            erros_lexicos.append(f"Erro léxico: Caractere inválido \'{valor}\' na posição {match.start()}")
+            # Não adiciona o token MISMATCH à lista de tokens gerados para que o parser não o veja
         else:
             tokens_gerados.append((tipo, valor))
             if tipo == "ID" and valor not in tabela_simbolos:
                 tabela_simbolos[valor] = {"tipo": "indefinido", "valor": ""}
-    return tokens_gerados
+    return tokens_gerados, erros_lexicos
 
 def salvar_html(caminho_arquivo=None):
     """
@@ -83,10 +88,15 @@ if __name__ == "__main__":
             if not codigo_fonte.strip():
                 print(f"⚠ O arquivo {codigo_path} está vazio!")
             else:
-                tokens = analise_lexica(codigo_fonte)
+                tokens, erros_lexicos = analise_lexica(codigo_fonte)
                 print("Tokens gerados:")
                 for token in tokens:
                     print(token)
+                
+                if erros_lexicos:
+                    print("Erros léxicos encontrados:")
+                    for erro in erros_lexicos:
+                        print(erro)
                 
                 output_dir = os.path.join(project_root, "output")
                 os.makedirs(output_dir, exist_ok=True)
@@ -94,3 +104,7 @@ if __name__ == "__main__":
                 salvar_html(tabela_path)
     except FileNotFoundError as e:
         print(f"❌ Arquivo não encontrado: {e}")
+
+
+
+
